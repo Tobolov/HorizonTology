@@ -1,20 +1,12 @@
-from flask import Flask
 from PIL import Image, ImageFont, ImageDraw
 
 
-app = Flask(__name__)
-
-@app.route('/')
-def hello_world():
-    return text_to_dot_map("Python PIL")
-
-
-def text_to_dot_map(textToDisplay):
+def text_to_dot_map(texttoconvert):
     font = ImageFont.truetype('arialbd.ttf', 15)
-    size = font.getsize(textToDisplay)  # calc the size of text in pixels
+    size = font.getsize(texttoconvert)  # calc the size of text in pixels
     image = Image.new('1', size, 1)  # create a b/w image
     draw = ImageDraw.Draw(image)
-    draw.text((0, 0), textToDisplay, font=font)  # render the text to the bitmap
+    draw.text((0, 0), texttoconvert, font=font)  # render the text to the bitmap
 
     stringoutput = ""
     for row in range(size[1]):
@@ -31,7 +23,3 @@ def map_bit_to_char(im, col, row):
         return '&nbsp;&nbsp;'
     else:
         return '#'
-
-
-if __name__ == '__main__':
-    app.run()
