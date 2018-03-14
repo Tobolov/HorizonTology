@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from python.dotmapgenerator import *
 
 
@@ -11,8 +11,11 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 def index():
     return render_template('index.html')
 
+
 @app.route('/app.html')
-def application():
+def process():
+    if len(request.args) != 0:
+        return "Generate text"
     return render_template('app.html')
 
 

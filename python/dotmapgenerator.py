@@ -1,8 +1,12 @@
 from PIL import Image, ImageFont, ImageDraw
 
+# 1 - Arial - ariblk.ttf
+# 2 - Impact - impact.ttf
+# 3 - Bauhaus - BAUHS93.TTF
+
 
 def text_to_dot_map(texttoconvert):
-    font = ImageFont.truetype('arialbd.ttf', 15)
+    font = ImageFont.truetype('ariblk.ttf', 15)
     size = font.getsize(texttoconvert)  # calc the size of text in pixels
     image = Image.new('1', size, 1)  # create a b/w image
     draw = ImageDraw.Draw(image)
