@@ -1,37 +1,84 @@
 from PIL import Image, ImageFont, ImageDraw
+import itertools, os
 
-# 1 - Arial - ariblk.ttf
-# 2 - Impact - impact.ttf
-# 3 - Bauhaus - BAUHS93.TTF
-font_map = {'1': 'ariblk.ttf',
-            '2': 'impact.ttf',
-            '3': 'GILSANUB.TTF',
-            }
+font_map = {}
 
 
-def text_to_dot_map(texttoconvert, font, font_size):
+def generate_font_paths(app):
+    global font_map
+    font_map = {'1': 'ariblk.ttf',
+                '2': os.path.join(app.root_path, 'python', 'block.ttf'),
+                '3': 'GILSANUB.TTF',
+                '4': os.path.join(app.root_path, 'python', 'blockline.ttf'),
+                }
+
+
+def text_to_dot_map(text, font, font_size):
     font = ImageFont.truetype(font_map[font], int(font_size))
-    size = font.getsize(texttoconvert)  # calc the size of text in pixels
+    size = font.getsize(text)  # calc the size of text in pixels
     image = Image.new('1', size, 1)  # create a b/w image
     draw = ImageDraw.Draw(image)
-    draw.text((0, 0), texttoconvert, font=font)  # render the text to the bitmap
+    draw.text((0, 0), text, font=font)  # render the text to the bitmap
 
-    stringoutput = ''
+    output = []
     for row in range(size[1]):
         line = []
         for column in range(size[0]):
-            line += [map_bit_to_char(image, column, row)]
+            line += [not image.getpixel((column, row))]
 
         if len(set(line)) == 1:
             continue
 
-        stringoutput += ''.join(line) + '<br>'
+        output += [line]
 
-    return stringoutput
+    return output
 
 
-def map_bit_to_char(im, col, row):
-    if im.getpixel((col, row)):
-        return '&nbsp;'
-    else:
-        return '#'
+def count_free_slots(dot_map):
+    sum = 0
+    for row in range(len(dot_map)):
+        for column in range(len(dot_map[0])):
+            sum += 1 if dot_map[row][column] else 0
+
+    return sum
+
+
+def text_to_fancy(text, font, font_size):
+    dot_map = text_to_dot_map(text, font, font_size)
+
+    output = ''
+    for row in range(len(dot_map)):
+        for column in range(len(dot_map[0])):
+            output += '#' if dot_map[row][column] else '&nbsp;'
+
+        output += '<br>'
+
+    return output + '<br>'
+
+
+def wrap_text_in_text(inner, outer, font, font_size):
+    dot_map = text_to_dot_map(outer, font, font_size)
+    inner = list(itertools.chain.from_iterable([[x, " "] for x in inner.split(" ")]))
+
+    out = ""
+    current_word = 0
+    for i in range(len(dot_map)):
+        length = 0
+        for j in range(len(dot_map[0])):
+            length += 1
+
+            if not dot_map[i][j]:
+                out += "&nbsp;" * length
+                length = 0
+
+            if length == len(inner[current_word]):
+                out += inner[current_word]
+                current_word += 1
+                length = 0
+
+                if len(inner) == current_word:
+                    print(dot_map)
+                    return out
+        out += "<br>"
+
+    return out

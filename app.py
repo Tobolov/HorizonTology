@@ -17,8 +17,12 @@ def process():
     error = lambda: render_template('process.html', generated_text="ERROR")
 
     if len(request.args) != 0:
-        maintext = request.args.get("text[main]")
-        if not maintext:
+        inner = request.args.get("text[main]")
+        if not inner:
+            return error()
+
+        outer = request.args.get("text[wrapper]")
+        if not outer:
             return error()
 
         font = request.args.get("options[font]")
@@ -29,7 +33,7 @@ def process():
         if not size:
             return error()
 
-        text = text_to_dot_map(maintext, font, size)
+        text = wrap_text_in_text(inner, outer, font, size)
         return render_template('process.html', generated_text=text)
 
     else:
@@ -37,4 +41,5 @@ def process():
 
 
 if __name__ == '__main__':
+    generate_font_paths(app)
     app.run()
