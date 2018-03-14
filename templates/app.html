@@ -4,7 +4,7 @@
     <div class="ui container">
         <h1 id="title">HorizonTology</h1>
 
-        <form class="ui form segment" action="app.html" method="get">
+        <form class="ui form segment" action="app.html" method="get" style="margin-bottom: 30px">
             <h4 class="ui dividing header">Text Information</h4>
             <div class="required field">
                 <label>Main Text</label>
@@ -18,6 +18,13 @@
 
             <h4 class="ui dividing header">Options</h4>
             <div class="fields">
+                <div class="three wide field">
+                    <label>Render Method</label>
+                    <select class="ui fluid search dropdown" name="options[method]">
+                        <option value="1">Auto font size</option>
+                        <option value="2">Repeat text to fill</option>
+                    </select>
+                </div>
                 <div class="three wide field">
                     <label>Font Style</label>
                     <select class="ui fluid search dropdown" name="options[font]">

@@ -12,6 +12,10 @@ def index():
     return render_template('index.html')
 
 
+METHOD_AUTOSIZE = 1
+METHOD_REPEAT = 2
+
+
 @app.route('/app.html')
 def process():
     error = lambda: render_template('process.html', generated_text="ERROR")
@@ -25,15 +29,28 @@ def process():
         if not outer:
             return error()
 
+        method = request.args.get("options[method]")
+        if not method:
+            return error()
+
         font = request.args.get("options[font]")
         if not font:
             return error()
 
-        size = request.args.get("options[size]")
-        if not size:
-            return error()
+        method = int(method)
+        if method == METHOD_AUTOSIZE:
+            error()
 
-        text = wrap_text_in_text(inner, outer, font, size)
+        elif int(method) == METHOD_REPEAT:
+            size = request.args.get("options[size]")
+            if not size:
+                return error()
+
+            text = wrap_text_in_text_repeat(inner, outer, font, size)
+
+        else:
+            error()
+
         return render_template('process.html', generated_text=text)
 
     else:

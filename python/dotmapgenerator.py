@@ -7,9 +7,9 @@ font_map = {}
 def generate_font_paths(app):
     global font_map
     font_map = {'1': 'ariblk.ttf',
-                '2': os.path.join(app.root_path, 'python', 'block.ttf'),
+                '2': os.path.join(app.root_path, 'static', 'fonts', 'block.ttf'),
                 '3': 'GILSANUB.TTF',
-                '4': os.path.join(app.root_path, 'python', 'blockline.ttf'),
+                '4': os.path.join(app.root_path, 'static', 'fonts', 'blockline.ttf'),
                 }
 
 
@@ -56,7 +56,7 @@ def text_to_fancy(text, font, font_size):
     return output + '<br>'
 
 
-def wrap_text_in_text(inner, outer, font, font_size):
+def wrap_text_in_text_repeat(inner, outer, font, font_size):
     dot_map = text_to_dot_map(outer, font, font_size)
     inner = list(itertools.chain.from_iterable([[x, " "] for x in inner.split(" ")]))
 
@@ -77,8 +77,7 @@ def wrap_text_in_text(inner, outer, font, font_size):
                 length = 0
 
                 if len(inner) == current_word:
-                    print(dot_map)
-                    return out
+                    current_word = 0
         out += "<br>"
 
     return out
