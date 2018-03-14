@@ -14,14 +14,22 @@ def index():
 
 @app.route('/app.html')
 def process():
+    error = lambda: render_template('process.html', generated_text="ERROR")
+
     if len(request.args) != 0:
-        return "Generate text"
-    return render_template('app.html')
+        maintext = request.args.get("text[main]")
+        if not maintext:
+            return error()
 
+        font = request.args.get("options[font]")
+        if not font:
+            return error()
 
-@app.route('/<text>')
-def index_with_text(text):
-    return text_to_dot_map(text)
+        text = text_to_dot_map(maintext, font)
+        return render_template('process.html', generated_text=text)
+
+    else:
+        return render_template('app.html')
 
 
 if __name__ == '__main__':
