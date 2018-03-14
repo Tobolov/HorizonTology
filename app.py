@@ -25,7 +25,11 @@ def process():
         if not font:
             return error()
 
-        text = text_to_dot_map(maintext, font)
+        size = request.args.get("options[size]")
+        if not size:
+            return error()
+
+        text = text_to_dot_map(maintext, font, size)
         return render_template('process.html', generated_text=text)
 
     else:

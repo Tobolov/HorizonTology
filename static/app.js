@@ -1,6 +1,4 @@
-$('.ui.dropdown')
-    .dropdown()
-;
+$('.ui.dropdown').dropdown();
 
 $('.ui.form')
     .form({
@@ -22,7 +20,16 @@ $('.ui.form')
                         prompt: 'Please enter some wrapper text'
                     }
                 ]
-            }
+            },
+            options_size: {
+                identifier: 'options[size]',
+                rules: [
+                    {
+                        type: 'integer[5..150]',
+                        prompt: 'Please enter an number between 5 and 150'
+                    }
+                ]
+            },
         }
     })
 ;

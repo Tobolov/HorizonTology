@@ -9,8 +9,8 @@ font_map = {'1': 'ariblk.ttf',
             }
 
 
-def text_to_dot_map(texttoconvert, font):
-    font = ImageFont.truetype(font_map[font], 15)
+def text_to_dot_map(texttoconvert, font, font_size):
+    font = ImageFont.truetype(font_map[font], int(font_size))
     size = font.getsize(texttoconvert)  # calc the size of text in pixels
     image = Image.new('1', size, 1)  # create a b/w image
     draw = ImageDraw.Draw(image)

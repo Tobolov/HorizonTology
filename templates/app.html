@@ -17,22 +17,27 @@
 
 
             <h4 class="ui dividing header">Options</h4>
-            <div class="two wide field">
-                <label>Font</label>
-                <select class="ui fluid search dropdown" name="options[font]">
-                    <option value="1">Arial</option>
-                    <option value="2">Impact</option>
-                    <option value="3">Gill Sans</option>
-                </select>
+            <div class="fields">
+                <div class="three wide field">
+                    <label>Font Style</label>
+                    <select class="ui fluid search dropdown" name="options[font]">
+                        <option value="1">Arial</option>
+                        <option value="2">Impact</option>
+                        <option value="3">Gill Sans</option>
+                    </select>
+                </div>
+                <div class="two wide field">
+                    <label>Font Size</label>
+                    <input type="text" name="options[size]" maxlength="3" value="25">
+                </div>
             </div>
-
 
             <h4 class="ui dividing header">Finished!</h4>
             <div class="ui animated fade primary submit button" tabindex="0">
-              <div class="visible content">Work the magic!</div>
-              <div class="hidden content">
-                <i class="magic icon"></i> + <i class="flask icon"></i> = <i class="fire icon"></i>
-              </div>
+                <div class="visible content">Work the magic!</div>
+                <div class="hidden content">
+                    <i class="magic icon"></i> + <i class="flask icon"></i> = <i class="fire icon"></i>
+                </div>
             </div>
             <div class="ui reset button">Reset</div>
 
@@ -69,6 +74,6 @@
     </style>
 {% endblock %}
 
-{%  block scripts %}
-<script src="static/app.js"></script>
-{%  endblock %}
+{% block scripts %}
+    <script src="static/app.js"></script>
+{% endblock %}
